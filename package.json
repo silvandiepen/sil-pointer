@@ -1,0 +1,29 @@
+{
+	"name": "@sil/pointer",
+	"version": "0.0.1",
+	"main": "dist/sil-pointer.umd.js",
+	"module": "dist/sil-pointer.esm.js",
+	"unpkg": "dist/sil-pointer.min.js",
+	"browser": {
+		"./sfc": "src/sil-pointer.vue"
+	},
+	"scripts": {
+		"build": "npm run build:unpkg & npm run build:es & npm run build:umd",
+		"build:umd": "rollup --config build/rollup.config.js --format umd --file dist/sil-pointer.umd.js",
+		"build:es": "rollup --config build/rollup.config.js --format es --file dist/sil-pointer.esm.js",
+		"build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/sil-pointer.min.js"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"minimist": "^1.2.0",
+		"rollup": "^0.57.1",
+		"rollup-plugin-buble": "^0.19.2",
+		"rollup-plugin-uglify-es": "0.0.1",
+		"rollup-plugin-vue": "^4.3.2",
+		"vue": "^2.5.16",
+		"vue-template-compiler": "^2.5.16"
+	},
+	"author": "Sil van Diepen",
+	"license": "ISC",
+	"description": ""
+}
