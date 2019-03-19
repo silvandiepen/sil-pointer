@@ -16,7 +16,7 @@ var script = {
 			  left: box.left + scroll.left - client.left
       };
 
-			return { top: Math.round(position.top), left: Math.round(position.left) };
+			return { top: Math.round(position.top), left: Math.round(position.left), width: Math.round(box.width), height: Math.round(box.height), scroll: scroll };
 		};
 
 		var setPosition = function(e, el) {
@@ -28,10 +28,35 @@ var script = {
       } else {
         pos.x = e.pageX - getCoords(el).left;
 	  		pos.y = e.pageY - getCoords(el).top;    
+      }      
+			if(binding.value.type === 'percentage'){
+        
+        var percentage = {
+          x: Math.round(((100 / coords.width) * (e.pageX - coords.left))),
+          y: Math.round(((100 / coords.height) * (e.pageY - coords.top)))
+        };
+        if(binding.value.min){
+          if(percentage.x < binding.value.min){
+            percentage.x = binding.value.min;
+          }
+          if(percentage.y < binding.value.min){
+            percentage.y = binding.value.min;
+          }
+        }
+        if(binding.value.max){
+          if(percentage.x > binding.value.max){
+            percentage.x = binding.value.max;
+          }
+          if(percentage.y > binding.value.max){
+            percentage.y = binding.value.max;
+          }
+        }
+        el.style.setProperty('--x', percentage.x + "%");
+        el.style.setProperty('--y', percentage.y + "%");        
+			} else {
+        el.style.setProperty('--x', ((pos.x) + "px"));
+        el.style.setProperty('--y', ((pos.y) + "px"));          
       }
-
-			el.style.setProperty('--x', ((pos.x) + "px"));
-			el.style.setProperty('--y', ((pos.y) + "px"));
 		};
 		if (!process.server) {
 			window.addEventListener('mousemove', function(e) {
