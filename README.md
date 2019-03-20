@@ -27,6 +27,27 @@ Use the component with default values:
 
 When the directive is added, it will give you back a `--x` and a `--y` which you can use for instance for a pointer or animated background.
 
+### Options
+
+By default the directive will return you with the current x and why on the page. 
+
+#### Percentage
+
+You can also choose type percentage, in this case directive will return the position of the pointer relative to the element which has the directive.
+When pointing in the ultimate center of the element the `--x` and `--y` will be `50%`.
+
+```html
+<any-element v-pointer="{ type: 'percentage' }">
+```
+#### Min / Max values
+
+When you are using the percentage option. You can also choose to give the value a min and max. 
+
+```html
+<any-element v-pointer="{ type: 'percentage', min: 0, max: 100 }">
+```
+In this case the pointer won't give any value bigger than 100 and smaller than 0. 
+
 ### Examples
 
 #### Button Background

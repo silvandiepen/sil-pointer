@@ -8,6 +8,8 @@
 		"./sfc": "src/sil-pointer.vue"
 	},
 	"scripts": {
+    "lint": "eslint --ext .js,.vue --ignore-path .eslintignore .",
+    "lint:fix": "eslint --ext .js,.vue --ignore-path .eslintignore . --fix",
 		"build": "npm run build:unpkg & npm run build:es & npm run build:umd",
 		"build:umd": "rollup --config build/rollup.config.js --format umd --file dist/sil-pointer.umd.js",
 		"build:es": "rollup --config build/rollup.config.js --format es --file dist/sil-pointer.esm.js",
@@ -15,6 +17,10 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.9.0",
+		"eslint-plugin-prettier": "^3.0.1",
+		"eslint-plugin-vue": "^4.0.0",
 		"minimist": "^1.2.0",
 		"rollup": "^0.57.1",
 		"rollup-plugin-buble": "^0.19.2",
