@@ -1,6 +1,6 @@
 {
 	"name": "@sil/pointer",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"main": "dist/sil-pointer.umd.js",
 	"module": "dist/sil-pointer.esm.js",
 	"unpkg": "dist/sil-pointer.min.js",
@@ -8,8 +8,8 @@
 		"./sfc": "src/sil-pointer.vue"
 	},
 	"scripts": {
-    "lint": "eslint --ext .js,.vue --ignore-path .eslintignore .",
-    "lint:fix": "eslint --ext .js,.vue --ignore-path .eslintignore . --fix",
+		"lint": "eslint --ext .js,.vue --ignore-path .eslintignore .",
+		"lint:fix": "eslint --ext .js,.vue --ignore-path .eslintignore . --fix",
 		"build": "npm run build:unpkg & npm run build:es & npm run build:umd",
 		"build:umd": "rollup --config build/rollup.config.js --format umd --file dist/sil-pointer.umd.js",
 		"build:es": "rollup --config build/rollup.config.js --format es --file dist/sil-pointer.esm.js",
