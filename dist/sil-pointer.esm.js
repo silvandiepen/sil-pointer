@@ -2,6 +2,17 @@
 
 var script = {
 	bind: function(el, binding) {
+		var setting = {
+			type: binding.value.type || 'pixel',
+			min: binding.value.min || null,
+			min_y: binding.value.min_y || null,
+			min_x: binding.value.min_y || null,
+			max: binding.value.max || null,
+			max_y: binding.value.max_y || null,
+			max_x: binding.value.max_y || null,
+			var_y: binding.value.var_y || '--y',
+			var_x: binding.value.var_y || '--x'
+		};
 		var getCoords = function(elem) {
 			// Get the element settings
 			var box = elem.getBoundingClientRect();
@@ -39,22 +50,18 @@ var script = {
 			var pos = { x: 0, y: 0 };
 			var coords = getCoords(el);
 
-			// Check if there is a binding value;
-			if (binding.value) {
-				pos.x = e.pageX;
-				pos.y = e.pageY;
-			} else {
-				pos.x = e.pageX - coords.left;
-				pos.y = e.pageY - coords.top;
-			}
+			// Set the position
+			pos.x = e.pageX;
+			pos.y = e.pageY;
 
 			// Switch the type of the pointer.
-			switch (binding.value.type) {
+			switch (setting.type) {
 				case 'percentage':
 					setPercentage(e, pos, coords);
 					break;
-				default:
+				case 'pixel':
 					setPosition(pos);
+					break;
 			}
 		};
 
@@ -69,30 +76,30 @@ var script = {
 
 		var boundingValues = function(value) {
 			// Check if min value is set
-			if (binding.value.min) {
-				value.x = bound.min(value.x, binding.value.min);
-				value.y = bound.min(value.y, binding.value.min);
+			if (setting.min !== null) {
+				value.x = bound.min(value.x, setting.min);
+				value.y = bound.min(value.y, setting.min);
 			}
 			// Check if min value is set for y
-			if (binding.value.min_y) {
-				value.y = bound.max(value.y, binding.value.min);
+			if (setting.min_y !== null) {
+				value.y = bound.max(value.y, setting.min);
 			}
 			// Check if min value is set for x
-			if (binding.value.min_x) {
-				value.y = bound.max(value.x, binding.value.min);
+			if (setting.min_x !== null) {
+				value.y = bound.max(value.x, setting.min);
 			}
 			// Check if max value is set
-			if (binding.value.max) {
-				value.x = bound.max(value.x, binding.value.max);
-				value.y = bound.max(value.y, binding.value.max);
+			if (setting.max !== null) {
+				value.x = bound.max(value.x, setting.max);
+				value.y = bound.max(value.y, setting.max);
 			}
 			// Check if max value is set for y
-			if (binding.value.max_y) {
-				value.y = bound.max(value.y, binding.value.max);
+			if (setting.max_y !== null) {
+				value.y = bound.max(value.y, setting.max);
 			}
 			// Check if max value is set for x
-			if (binding.value.max_x) {
-				value.y = bound.max(value.x, binding.value.max);
+			if (setting.max_x !== null) {
+				value.y = bound.max(value.x, setting.max);
 			}
 
 			return value;
@@ -121,22 +128,15 @@ var script = {
 		};
 
 		var setProps = function(x, y) {
-			// Check if there are custom variables
-			var vars = {
-				x: binding.value.x_var || '--x',
-				y: binding.value.y_var || '--y'
-			};
-
 			// Set the props to the DOM
-			el.style.setProperty(vars.x, x);
-			el.style.setProperty(vars.y, y);
+			el.style.setProperty(setting.var_x, x);
+			el.style.setProperty(setting.var_y, y);
 		};
 
 		if (!process.server) {
 			// Create the mousemove listener
 			window.addEventListener('mousemove', function(e) {
 				createPosition(e, el);
-				// console.log(e);
 			});
 		}
 	}
