@@ -4,6 +4,7 @@ var script = {
 			binding.value = {};
 		}
 		var setting = {
+			center: binding.value.center || false,
 			box: binding.value.box || 'element',
 			type: binding.value.type || 'pixel',
 			min: binding.value.min || null,
@@ -19,12 +20,13 @@ var script = {
 			// Get the element settings
 			var box = elem.getBoundingClientRect();
 
-			// Get scroll position
-			var scroll = {
+			// Get viewport position
+			var viewport = {
 				top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop,
-				left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
+				left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 			};
-
 			// Get Client/Element position
 			var client = {
 				top: document.documentElement.clientTop || document.body.clientTop || 0,
@@ -45,10 +47,7 @@ var script = {
 					width: Math.round(box.width),
 					height: Math.round(box.height)
 				},
-				viewport: {
-					top: Math.round(scroll.top),
-					left: Math.round(scroll.left)
-				},
+				viewport: viewport,
 				scroll: scroll
 			};
 		};
@@ -97,16 +96,31 @@ var script = {
 			var pos = { x: 0, y: 0 };
 			switch (setting.box) {
 				case 'element':
-					pos.x = e.pageX - getCoords(el).element.left;
-					pos.y = e.pageY - getCoords(el).element.top;
+					if (setting.center) {
+						pos.x = e.pageX - getCoords(el).element.left - getCoords(el).element.width / 2;
+						pos.y = e.pageY - getCoords(el).element.top - getCoords(el).element.height / 2;
+					} else {
+						pos.x = e.pageX - getCoords(el).element.left;
+						pos.y = e.pageY - getCoords(el).element.top;
+					}
 					break;
 				case 'page':
-					pos.x = e.pageX;
-					pos.y = e.pageY;
+					if (setting.center) {
+						pos.x = e.pageX / 2;
+						pos.y = e.pageY / 2;
+					} else {
+						pos.x = e.pageX;
+						pos.y = e.pageY;
+					}
 					break;
 				case 'viewport':
-					pos.x = e.pageX - getCoords(el).viewport.left;
-					pos.y = e.pageY - getCoords(el).viewport.top;
+					if (setting.center) {
+						pos.x = e.pageX - getCoords(el).viewport.left - getCoords(el).viewport.width / 2;
+						pos.y = e.pageY - getCoords(el).viewport.top - getCoords(el).viewport.height / 2;
+					} else {
+						pos.x = e.pageX - getCoords(el).viewport.left;
+						pos.y = e.pageY - getCoords(el).viewport.top;
+					}
 					break;
 			}
 
