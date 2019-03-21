@@ -58,15 +58,14 @@ export default {
 			}
 		};
 
-
 		const bound = {
 			min: (a, b) => {
-				return (a < b ? b : a);
-				},
+				return a < b ? b : a;
+			},
 			max: (a, b) => {
 				return a > b ? b : a;
 			}
-		};;
+		};
 
 		const boundingValues = function(value) {
 			// Check if min value is set
@@ -102,7 +101,6 @@ export default {
 		const setPosition = function(pos) {
 			// Bound the values to a min max when available
 			pos = boundingValues(pos);
-			console.log(pos);
 
 			// Set the props to the DOM
 			setProps(pos.x + 'px', pos.y + 'px');
@@ -126,7 +124,7 @@ export default {
 			// Check if there are custom variables
 			let vars = {
 				x: binding.value.x_var || '--x',
-				y: binding.value.x_var || '--y'
+				y: binding.value.y_var || '--y'
 			};
 
 			// Set the props to the DOM

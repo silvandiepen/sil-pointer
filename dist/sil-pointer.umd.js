@@ -6,7 +6,6 @@
 
 	//
 
-	/* eslint-disable */
 	var script = {
 		bind: function(el, binding) {
 			var getCoords = function(elem) {
@@ -64,14 +63,13 @@
 						setPosition(pos);
 				}
 			};
-			
-			
+
 			var bound = {
-				min: function (a,b) {
-				return (a < b ? b : a);
-			},
-				max: function (a,b) {
-					return (a > b ? b : a);
+				min: function (a, b) {
+					return a < b ? b : a;
+				},
+				max: function (a, b) {
+					return a > b ? b : a;
 				}
 			};
 
@@ -109,7 +107,6 @@
 			var setPosition = function(pos) {
 				// Bound the values to a min max when available
 				pos = boundingValues(pos);
-				console.log(pos);
 
 				// Set the props to the DOM
 				setProps(pos.x + 'px', pos.y + 'px');
@@ -133,7 +130,7 @@
 				// Check if there are custom variables
 				var vars = {
 					x: binding.value.x_var || '--x',
-					y: binding.value.x_var || '--y'
+					y: binding.value.y_var || '--y'
 				};
 
 				// Set the props to the DOM
