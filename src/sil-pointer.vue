@@ -14,7 +14,7 @@ export default {
 			max_y: binding.value.max_y || null,
 			max_x: binding.value.max_y || null,
 			var_y: binding.value.var_y || '--y',
-			var_x: binding.value.var_y || '--x'
+			var_x: binding.value.var_x || '--x'
 		};
 		const getCoords = function(elem) {
 			// Get the element settings
