@@ -12,6 +12,7 @@
 				binding.value = {};
 			}
 			var setting = {
+				absolute: binding.value.absolute || false,
 				type: binding.value.type || 'pixel',
 				min: binding.value.min || null,
 				min_y: binding.value.min_y || null,
@@ -38,7 +39,7 @@
 					left: document.documentElement.clientLeft || document.body.clientLeft || 0
 				};
 
-				// Get position
+				// Get position of the element
 				var position = {
 					top: box.top + scroll.top - client.top,
 					left: box.left + scroll.left - client.left
@@ -59,9 +60,15 @@
 				var pos = { x: 0, y: 0 };
 				var coords = getCoords(el);
 
-				// Set the position
-				pos.x = e.pageX;
-				pos.y = e.pageY;
+				if (setting.absolute) {
+					// Set position in the page.
+					pos.x = e.pageX;
+					pos.y = e.pageY;
+				} else {
+					// Set position in the viewport.
+					pos.x = e.pageX - getCoords(el).left;
+					pos.y = e.pageY - getCoords(el).top;
+				}
 
 				// Switch the type of the pointer.
 				switch (setting.type) {
