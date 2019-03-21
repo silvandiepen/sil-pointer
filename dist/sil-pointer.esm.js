@@ -1,12 +1,10 @@
-//
-
 var script = {
 	bind: function(el, binding) {
 		if (!binding.value) {
 			binding.value = {};
 		}
 		var setting = {
-			absolute: binding.value.absolute || false,
+			box: binding.value.box || 'element',
 			type: binding.value.type || 'pixel',
 			min: binding.value.min || null,
 			min_y: binding.value.min_y || null,
@@ -41,38 +39,18 @@ var script = {
 
 			// Return all current positions and sizes
 			return {
-				top: Math.round(position.top),
-				left: Math.round(position.left),
-				width: Math.round(box.width),
-				height: Math.round(box.height),
+				element: {
+					top: Math.round(position.top),
+					left: Math.round(position.left),
+					width: Math.round(box.width),
+					height: Math.round(box.height)
+				},
+				viewport: {
+					top: Math.round(scroll.top),
+					left: Math.round(scroll.left)
+				},
 				scroll: scroll
 			};
-		};
-
-		var createPosition = function(e) {
-			// Define position and settings
-			var pos = { x: 0, y: 0 };
-			var coords = getCoords(el);
-
-			if (setting.absolute) {
-				// Set position in the page.
-				pos.x = e.pageX;
-				pos.y = e.pageY;
-			} else {
-				// Set position in the viewport.
-				pos.x = e.pageX - getCoords(el).left;
-				pos.y = e.pageY - getCoords(el).top;
-			}
-
-			// Switch the type of the pointer.
-			switch (setting.type) {
-				case 'percentage':
-					setPercentage(e, pos, coords);
-					break;
-				case 'pixel':
-					setPosition(pos);
-					break;
-			}
 		};
 
 		var bound = {
@@ -115,7 +93,23 @@ var script = {
 			return value;
 		};
 
-		var setPosition = function(pos) {
+		var setPosition = function(e) {
+			var pos = { x: 0, y: 0 };
+			switch (setting.box) {
+				case 'element':
+					pos.x = e.pageX - getCoords(el).element.left;
+					pos.y = e.pageY - getCoords(el).element.top;
+					break;
+				case 'page':
+					pos.x = e.pageX;
+					pos.y = e.pageY;
+					break;
+				case 'viewport':
+					pos.x = e.pageX - getCoords(el).viewport.left;
+					pos.y = e.pageY - getCoords(el).viewport.top;
+					break;
+			}
+
 			// Bound the values to a min max when available
 			pos = boundingValues(pos);
 
@@ -123,11 +117,12 @@ var script = {
 			setProps(pos.x + 'px', pos.y + 'px');
 		};
 
-		var setPercentage = function(e, pos, coords) {
+		var setPercentage = function(e) {
+			var coords = getCoords(el);
 			// Calculate the percentage based on the position
 			var percentage = {
-				x: Math.round((100 / coords.width) * (e.pageX - coords.left)),
-				y: Math.round((100 / coords.height) * (e.pageY - coords.top))
+				x: Math.round((100 / coords.element.width) * (e.pageX - coords.element.left)),
+				y: Math.round((100 / coords.element.height) * (e.pageY - coords.element.top))
 			};
 
 			// Bound the values to a min max when available
@@ -146,7 +141,14 @@ var script = {
 		if (!process.server) {
 			// Create the mousemove listener
 			window.addEventListener('mousemove', function(e) {
-				createPosition(e, el);
+				switch (setting.type) {
+					case 'percentage':
+						setPercentage(e);
+						break;
+					case 'pixel':
+						setPosition(e);
+						break;
+				}
 			});
 		}
 	}
