@@ -1,6 +1,5 @@
 
 <script>
-/* eslint-disable */
 export default {
 	bind: function(el, binding) {
 		const getCoords = function(elem) {
@@ -58,16 +57,16 @@ export default {
 					setPosition(pos);
 			}
 		};
-		
-		
+
+
 		const bound = {
-			min: (a,b) => {
-			return (a < b ? b : a);
-		},
-			max: (a,b) => {
-				return (a > b ? b : a);
+			min: (a, b) => {
+				return (a < b ? b : a);
+				},
+			max: (a, b) => {
+				return a > b ? b : a;
 			}
-		}
+		};;
 
 		const boundingValues = function(value) {
 			// Check if min value is set
