@@ -8,6 +8,9 @@
 
 	var script = {
 		bind: function(el, binding) {
+			if (!binding.value) {
+				binding.value = {};
+			}
 			var setting = {
 				type: binding.value.type || 'pixel',
 				min: binding.value.min || null,
