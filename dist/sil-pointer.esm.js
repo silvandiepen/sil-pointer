@@ -1,3 +1,4 @@
+/* eslint-disable */
 var script = {
 	bind: function(el, binding) {
 		if (!binding.value) {
@@ -27,6 +28,7 @@ var script = {
 				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
 				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 			};
+
 			// Get Client/Element position
 			var client = {
 				top: document.documentElement.clientTop || document.body.clientTop || 0,
@@ -35,8 +37,8 @@ var script = {
 
 			// Get position of the element
 			var position = {
-				top: box.top + scroll.top - client.top,
-				left: box.left + scroll.left - client.left
+				top: box.top + viewport.top - client.top,
+				left: box.left + viewport.left - client.left
 			};
 
 			// Return all current positions and sizes

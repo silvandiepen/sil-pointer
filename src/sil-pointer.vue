@@ -1,4 +1,5 @@
 <script>
+/* eslint-disable */
 export default {
 	bind: function(el, binding) {
 		if (!binding.value) {
@@ -27,7 +28,7 @@ export default {
 				left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
 				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
 				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-			};;
+			};
 
 			// Get Client/Element position
 			let client = {
@@ -37,8 +38,8 @@ export default {
 
 			// Get position of the element
 			let position = {
-				top: box.top + scroll.top - client.top,
-				left: box.left + scroll.left - client.left
+				top: box.top + viewport.top - client.top,
+				left: box.left + viewport.left - client.left
 			};
 
 			// Return all current positions and sizes
