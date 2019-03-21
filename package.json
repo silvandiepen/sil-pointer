@@ -1,6 +1,6 @@
 {
 	"name": "@sil/pointer",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"main": "dist/sil-pointer.umd.js",
 	"module": "dist/sil-pointer.esm.js",
 	"unpkg": "dist/sil-pointer.min.js",
