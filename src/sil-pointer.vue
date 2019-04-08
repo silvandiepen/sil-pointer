@@ -72,11 +72,11 @@ export default {
 			}
 			// Check if min value is set for y
 			if (setting.min_y !== null) {
-				value.y = bound.max(value.y, setting.min);
+				value.y = bound.max(value.y, setting.min_y);
 			}
 			// Check if min value is set for x
 			if (setting.min_x !== null) {
-				value.y = bound.max(value.x, setting.min);
+				value.y = bound.max(value.x, setting.min_x);
 			}
 			// Check if max value is set
 			if (setting.max !== null) {
@@ -85,11 +85,11 @@ export default {
 			}
 			// Check if max value is set for y
 			if (setting.max_y !== null) {
-				value.y = bound.max(value.y, setting.max);
+				value.y = bound.max(value.y, setting.max_y);
 			}
 			// Check if max value is set for x
 			if (setting.max_x !== null) {
-				value.y = bound.max(value.x, setting.max);
+				value.y = bound.max(value.x, setting.max_x);
 			}
 
 			return value;
