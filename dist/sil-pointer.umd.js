@@ -81,7 +81,7 @@
 				}
 				// Check if min value is set for x
 				if (setting.min_x !== null) {
-					value.y = bound.max(value.x, setting.min_x);
+					value.x = bound.max(value.x, setting.min_x);
 				}
 				// Check if max value is set
 				if (setting.max !== null) {
@@ -94,7 +94,7 @@
 				}
 				// Check if max value is set for x
 				if (setting.max_x !== null) {
-					value.y = bound.max(value.x, setting.max_x);
+					value.x = bound.max(value.x, setting.max_x);
 				}
 
 				return value;
