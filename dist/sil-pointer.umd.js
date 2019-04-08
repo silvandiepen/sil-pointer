@@ -152,6 +152,19 @@
 
 				// Set the props to the DOM
 				setProps(percentage.x + '%', percentage.y + '%');
+			};		
+			
+			var setScale = function(e) {
+				var coords = getCoords(el);
+				
+				// Bound the values to a min max when available
+				var scale = boundingValues({
+					x: Math.round((1 / coords.element.width) * (e.pageX - coords.element.left)),
+					y: Math.round((1 / coords.element.height) * (e.pageY - coords.element.top))
+				});
+
+				// Set the props to the DOM
+				setProps(scale.x, scale.y);
 			};
 
 			var setProps = function(x, y) {
@@ -166,6 +179,9 @@
 					switch (setting.type) {
 						case 'percentage':
 							setPercentage(e);
+							break;					
+						case 'scale':
+							setScale(e);
 							break;
 						case 'pixel':
 							setPosition(e);
