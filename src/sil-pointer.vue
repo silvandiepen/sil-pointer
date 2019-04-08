@@ -154,8 +154,8 @@ export default {
 			
 			// Bound the values to a min max when available
 			let scale = boundingValues({
-				x: Math.round((1 / coords.element.width) * (e.pageX - coords.element.left)),
-				y: Math.round((1 / coords.element.height) * (e.pageY - coords.element.top))
+				x: Math.round((100 / coords.element.width) * (e.pageX - coords.element.left)) / 100,
+				y: Math.round((100 / coords.element.height) * (e.pageY - coords.element.top)) / 100
 			});
 
 			// Set the props to the DOM
