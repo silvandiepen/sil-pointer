@@ -36,6 +36,31 @@ You can use for instance for a pointer or animated background.
 
 By default the directive will return you with the current x and why on the page. 
 
+
+| option | default   | description                                                                    |
+| ------ | --------- | ------------------------------------------------------------------------------ |
+| center | false     | Calculate the value based on the center of the element                         |
+| box    | `element` | Calculate values based on either the `element`, `viewport` or the whole `page` |
+| type   | `pixel`   | See below                                                                      |
+| min    | null      | Minimum return value for x and y                                               |
+| min_x  | null      | Minimum return value for x                                                     |
+| min_y  | null      | Minimum return value for y                                                     |
+| max    | null      | Maximum return value for x and y                                               |
+| max_x  | null      | Maximum return value for x                                                     |
+| max_y  | null      | Maximum return value for y                                                     |
+| var_x  | `--x`     | Property name for X to place value on.                                         |
+| var_y  | `--y`     | Property name for Y to place value on.                                         |
+
+
+*Type options:*
+
+| type           | output                         |
+| -------------- | ------------------------------ |
+| default: pixel | Returns a value in pixels      |
+| percentage     | Returns a value in percentage  |
+| scale          | Returns a value between 0 to 1 |
+
+
 #### Percentage
 
 You can also choose type percentage, in this case directive will return the position of the pointer relative to the element which has the directive.
